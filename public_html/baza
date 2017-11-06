@@ -1,0 +1,41 @@
+#make
+    id,
+    name
+
+#model
+    id.
+    name
+
+#version
+    id,
+    name,
+    year_from,
+    year_to
+
+#equipment
+    id,
+    name
+
+#color
+    id,
+    name
+
+#image
+    id,
+    path,
+    added
+
+#car
+    id,
+    title,
+    added,
+    manufactured, //rocznik
+    makeid,
+    modelid,
+    versionid,
+    colorid,
+    imageid
+
+#care_quipment
+    carid,
+    equipmentid
