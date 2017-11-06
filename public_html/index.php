@@ -1,6 +1,7 @@
 <?php
 require_once 'autoload.php';
 
+
 $myCars = array();
 $query = "  SELECT car.id, car.title, car.manufactured, color.name, make.name, model.name, version.name, image.path
             FROM car 
@@ -11,6 +12,7 @@ $query = "  SELECT car.id, car.title, car.manufactured, color.name, make.name, m
             INNER JOIN image ON car.imageid=image.id";
 
     $db = new Database();
+    $db->checkIfExists('color', 'name', 'czerwony');
     $stmt = $db->dbh->prepare($query);
     $stmt->execute();
     $cars = $stmt->fetchAll();
