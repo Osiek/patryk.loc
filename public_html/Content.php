@@ -20,9 +20,23 @@ class Content
         $objects = array();
         $className = ucfirst($tableName);
 
-        if ($parentId === null) $queryString = "SELECT id, name FROM $tableName ORDER BY name ASC";
+        $table = "";
+        switch ($tableName) {
+            case "color" : $table = "color";
+                break;
+            case "equipment" : $table = "equipment";
+                break;
+            case "make" : $table = "make";
+                break;
+            case "model" : $table = "model";
+                break;
+            case "version" : $table = "version";
+                break;
+        }
+
+        if ($parentId === null) $queryString = "SELECT id, name FROM $table ORDER BY name ASC";
         else {
-            $queryString = "SELECT id, name FROM $tableName WHERE parentid = :parent_id ORDER BY name ASC";
+            $queryString = "SELECT id, name FROM $table WHERE parentid = :parent_id ORDER BY name ASC";
         }
 
         $stmt = $this->db->dbh->prepare($queryString);
@@ -63,6 +77,7 @@ class Content
                     INNER JOIN version ON car.versionid=version.id
                     INNER JOIN image ON car.imageid=image.id
                     ORDER BY car.added DESC";
+
         $stmt = $this->db->dbh->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

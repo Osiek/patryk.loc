@@ -16,13 +16,13 @@ class Database
 
     public function __construct()
     {
-        $dsn = 'mysql:dbname='.$this->name.';host='.$this->host;
+        $dsn = 'mysql:dbname='.$this->name.';charset=utf8;host='.$this->host;
 
         try {
             $this->dbh = new PDO($dsn, $this->user, $this->password);
 
         } catch (PDOException $e) {
-            echo 'MySQL: Nie działa: '.$e->getMessage();
+            echo 'MySQL: '.$e->getMessage();
         }
     }
 
@@ -43,7 +43,7 @@ class Database
         }
 
 
-        $stmt = $this->dbh->prepare('SELECT id, '.$column.' FROM '.$tableName.' WHERE '.$column.' = :value LIMIT 1');
+        $stmt = $this->dbh->prepare('SELECT id, '.$column.' FROM '.$table.' WHERE '.$column.' = :value LIMIT 1');
         $stmt->bindParam(':value', $value, PDO::PARAM_STR);
 
         $stmt->execute();

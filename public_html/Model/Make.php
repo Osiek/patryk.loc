@@ -29,7 +29,8 @@ class Make extends BaseModel
 
     public static function withId($id, Database $db) {
         $result = $db->getRowNameFromId("make", $id);
-
-        return new self($result[0], $result[1]);
+        if(count($result) > 0) {
+            return new self($result[0], $result[1]);
+        }
     }
 }

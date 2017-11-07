@@ -1,15 +1,12 @@
 <?php
 require_once 'autoload.php';
-//$id, $title, $make, $model, $version, $manufactured, $color, $equipment, $image
 
 $db = new Database();
 
 $content = new Content($db);
+$makes = $content->getObjects("make");
 $colors = $content->getObjects("color");
 $equipments = $content->getObjects("equipment");
-$makes = $content->getObjects("make");
-$models = $content->getObjects("model");
-$versions = $content->getObjects("version");
 
 ?>
 
@@ -21,10 +18,6 @@ $versions = $content->getObjects("version");
 <body>
 
 <?php require_once 'html/navbar.html'; ?>
-
-<script>
-
-</script>
 
 <div class="container">
     <h1>Dodaj samochód</h1>

@@ -1,6 +1,7 @@
 <?php
 set_include_path(
     get_include_path()
+    .PATH_SEPARATOR.'Model'
 
 );
 function __autoload($class_name) {
