@@ -26,29 +26,64 @@ class Database
         }
     }
 
-    public function checkIfExists($tableName, $column, $value)
+    public function getRowIdFromRecordIfExists($tableName, $column, $value)
     {
         $table = "";
         switch ($tableName) {
             case "color" : $table = "color";
                 break;
-            case "color" : $table = "color";
+            case "equipment" : $table = "equipment";
                 break;
-            case "color" : $table = "color";
+            case "make" : $table = "make";
                 break;
-            case "color" : $table = "color";
+            case "model" : $table = "model";
                 break;
-            case "color" : $table = "color";
+            case "version" : $table = "version";
                 break;
         }
 
 
-        $stmt = $this->dbh->prepare('SELECT * FROM '.$tableName.' WHERE '.$column.' = :value');
+        $stmt = $this->dbh->prepare('SELECT id, '.$column.' FROM '.$tableName.' WHERE '.$column.' = :value LIMIT 1');
         $stmt->bindParam(':value', $value, PDO::PARAM_STR);
 
         $stmt->execute();
-        //print_r($stmt->errorInfo());
-        print_r($stmt->fetchAll());
+
+        if($stmt->rowCount() > 0) {
+            $rows = $stmt->fetchAll();
+            return $rows[0];
+        } else {
+            return false;
+        }
+
+    }
+
+    public function getRowNameFromId($tableName, $id) {
+        $table = "";
+        switch ($tableName) {
+            case "color" : $table = "color";
+                break;
+            case "equipment" : $table = "equipment";
+                break;
+            case "make" : $table = "make";
+                break;
+            case "model" : $table = "model";
+                break;
+            case "version" : $table = "version";
+                break;
+        }
+
+
+        $stmt = $this->dbh->prepare('SELECT id, name FROM '.$table.' WHERE id = :value LIMIT 1');
+        $stmt->bindParam(':value', $id);
+
+        $stmt->execute();
+
+        if($stmt->rowCount() > 0) {
+            $rows = $stmt->fetchAll();
+            return $rows[0];
+        } else {
+            return false;
+        }
     }
 
 }
