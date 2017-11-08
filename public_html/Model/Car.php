@@ -54,9 +54,18 @@ class Car
     }
 
     public function update(Database $db) {
-        $query = "UPDATE car SET title = :title, added = :added, manufactured = :manufactured, makeid = :makeid, modelid = :modelid, versionid = :versionid, colorid = :colorid, imageid = :imageid 
+        $query = "UPDATE car 
+                  SET title = :title, 
+                  added = :added, 
+                  manufactured = :manufactured, 
+                  makeid = :makeid, 
+                  modelid = :modelid, 
+                  versionid = :versionid, 
+                  colorid = :colorid, 
+                  imageid = :imageid 
                   WHERE id = :id";
         $stmt = $db->dbh->prepare($query);
+
         $stmt->bindParam(':id', $this->id);
         $stmt->bindParam(':title', $this->title);
         $stmt->bindParam(':added', date('Y-m-d G:i:s'));
@@ -70,9 +79,11 @@ class Car
 
         $addedCarId = $db->dbh->lastInsertId();
 
-        $query = "DELETE FROM car_equipment WHERE carid = :carid";
+        $query = "DELETE FROM car_equipment 
+                  WHERE carid = :carid";
         $stmt = $db->dbh->prepare($query);
-        $stmt->bindValue('carid', $id);
+
+        $stmt->bindValue('carid', $this->id);
         $stmt->execute();
 
         $query = "INSERT INTO car_equipment (carid, equipmentid) VALUES (:carid, :equipmentid)";
@@ -112,10 +123,11 @@ class Car
                     LIMIT 1";
 
         $stmt = $db->dbh->prepare($query);
+
         $stmt->bindParam(':car_id', $id);
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $c) {
             $equipment = Equipment::getForSpecificCar($c['car_id'], $db);
 

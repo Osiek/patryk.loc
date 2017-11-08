@@ -22,8 +22,10 @@ class Make extends BaseModel
 
     public static function create($name, Database $db) {
         $stmt = $db->dbh->prepare("INSERT INTO make (name) VALUES (:make_name)");
+
         $stmt->bindParam(":make_name", $name);
         $result = $stmt->execute();
+
         return $db->dbh->lastInsertId();
     }
 

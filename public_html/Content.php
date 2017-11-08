@@ -18,7 +18,7 @@ class Content
     public function getObjects($tableName, $parentId = null)
     {
         $objects = array();
-        $className = ucfirst($tableName);
+
 
         $table = "";
         switch ($tableName) {
@@ -34,9 +34,18 @@ class Content
                 break;
         }
 
-        if ($parentId === null) $queryString = "SELECT id, name FROM $table ORDER BY name ASC";
+        $className = ucfirst($table);
+
+        if ($parentId === null) {
+            $queryString = "SELECT id, name 
+                            FROM $table 
+                            ORDER BY name ASC";
+        }
         else {
-            $queryString = "SELECT id, name FROM $table WHERE parentid = :parent_id ORDER BY name ASC";
+            $queryString = "SELECT id, name 
+                            FROM $table 
+                            WHERE parentid = :parent_id 
+                            ORDER BY name ASC";
         }
 
         $stmt = $this->db->dbh->prepare($queryString);

@@ -34,13 +34,15 @@ class Equipment extends BaseModel
 
     public static function getForSpecificCar($carId, $db) {
         $equipments = array();
-        $equipment = $db->dbh->prepare("SELECT  equipment.id as equipment_id, 
-                                                equipment.name as equipment_name
+        $equipment = $db->dbh->prepare("SELECT equipment.id as equipment_id, 
+                                        equipment.name as equipment_name
                                         FROM equipment
                                         INNER JOIN car_equipment ON car_equipment.equipmentid=equipment.id
                                         WHERE car_equipment.carid = :carId");
+
         $equipment->bindParam(':carId', $carId);
         $equipment->execute();
+
         $results = $equipment->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($results as $r) {

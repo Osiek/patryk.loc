@@ -15,6 +15,8 @@ $equipments = $content->getObjects("equipment");
 
 $car = Car::getCarWithId($_GET['id'], $db);
 
+if(gettype($car) == 'boolean') die;
+
 ?>
 
 <!doctype html>

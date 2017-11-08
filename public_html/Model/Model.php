@@ -22,8 +22,10 @@ class Model extends BaseModel
 
     public static function create($name, Database $db) {
         $stmt = $db->dbh->prepare("INSERT INTO model (name) VALUES (:model_name)");
+
         $stmt->bindParam(":model_name", $name);
         $result = $stmt->execute();
+
         return $db->dbh->lastInsertId();
     }
 

@@ -66,7 +66,7 @@ if(!empty($_POST)) {
     }
 
     if(count($formErrors) > 0) {
-        echo '<p>Wystąpił błąd | Idź do <a href="index.php">strony głównej</a> lub edutuj ponownie<a href="edit.php?id='.$_POST['car_id'].'"> formularza</a></p>';
+        echo '<p>Wystąpił błąd | Idź do <a href="index.php">strony głównej</a> lub edutuj ponownie<a href="edit.php?id='.$_POST['car_id'].'"> formularz</a></p>';
         foreach ($formErrors as $err) {
             echo '<p>' . $err . '</p>';
         }

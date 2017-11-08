@@ -22,8 +22,10 @@ class Version extends BaseModel
 
     public static function create($name, Database $db) {
         $stmt = $db->dbh->prepare("INSERT INTO version (name) VALUES (:version_name)");
+
         $stmt->bindParam(":color_name", $name);
         $result = $stmt->execute();
+        
         return $db->dbh->lastInsertId();
     }
 

@@ -24,13 +24,16 @@ class Color extends BaseModel
 
     public static function withId($id, Database $db) {
         $result = $db->getRowNameFromId("color", $id);
+
         return new self($result[0], $result[1]);
     }
 
     public static function create($name, Database $db) {
         $stmt = $db->dbh->prepare("INSERT INTO color (name) VALUES (:color_name)");
+
         $stmt->bindParam(":color_name", $name);
         $result = $stmt->execute();
+
         return $db->dbh->lastInsertId();
     }
 }

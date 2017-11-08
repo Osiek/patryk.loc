@@ -19,4 +19,21 @@ $(function(ready){
         });
 
     })
+
+    $('.table tr').click(function(event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    });
+
+    $("input[type='checkbox']").change(function (e) {
+        if ($(this).is(":checked")) { //If the checkbox is checked
+            $(this).closest('tr').addClass("danger");
+            //Add class on checkbox checked
+        } else {
+            $(this).closest('tr').removeClass("danger");
+            //Remove class on checkbox uncheck
+        }
+    });
+
 });

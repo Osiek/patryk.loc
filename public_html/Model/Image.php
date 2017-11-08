@@ -21,8 +21,10 @@ class Image
     public static function fromId($id, Database $db) {
         $query = "SELECT id, path FROM image WHERE id = :id";
         $stmt = $db->dbh->prepare($query);
+
         $stmt->bindParam(':id', $id);
         $stmt->execute();
+
         $results = $stmt->fetchAll();
 
         return new Image($results[0]['id'], $results[0]['path']);
@@ -51,11 +53,14 @@ class Image
     public static function saveToDb($fileName, Database $db) {
         $datetime = date('Y-m-d G:i:s');
         $stmt = $db->dbh->prepare("INSERT INTO image (path, added) VALUES (:file, :datetime)");
+
         $stmt->bindParam(':file', $fileName);
         $stmt->bindParam(':datetime', $datetime);
         $stmt->execute();
+
         $img['fileName'] = $fileName;
         $img['id'] = $db->dbh->lastInsertId();
+
         return $img;
     }
 

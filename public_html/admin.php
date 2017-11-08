@@ -20,7 +20,7 @@ $cars = $content->getAllCars();
 <div class="container">
     <h1>Zarządzanie zawartością</h1>
     <form enctype="multipart/form-data" action="delete.php" method="post">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>Tytuł</th>

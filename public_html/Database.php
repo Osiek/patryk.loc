@@ -72,10 +72,12 @@ class Database
                 break;
         }
 
+        $queryString = 'SELECT id, name 
+                        FROM '.$table.' 
+                        WHERE id = :value LIMIT 1';
+        $stmt = $this->dbh->prepare($queryString);
 
-        $stmt = $this->dbh->prepare('SELECT id, name FROM '.$table.' WHERE id = :value LIMIT 1');
         $stmt->bindParam(':value', $id);
-
         $stmt->execute();
 
         if($stmt->rowCount() > 0) {
