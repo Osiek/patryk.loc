@@ -20,7 +20,3 @@ $(function(ready){
 
     })
 });
-
-$(document).ajaxStop(function () {
-    // 0 === $.active
-});

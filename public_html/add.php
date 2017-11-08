@@ -71,7 +71,7 @@ $equipments = $content->getObjects("equipment");
         </div>
         <div class="form-group">
             <label for="image_path">Zdjęcie</label>
-            <input name="image_path" type="file" class="form-control" id="image_path"></input>
+            <input name="image_path" type="file" class="form-control" id="image_path""></input>
         </div>
         <button type="submit" class="btn btn-default">Dodaj samochód</button>
     </form>

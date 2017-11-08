@@ -18,19 +18,35 @@ class Image
         $this->fileName = $fileName;
     }
 
+    public static function fromId($id, Database $db) {
+        $query = "SELECT id, path FROM image WHERE id = :id";
+        $stmt = $db->dbh->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+
+        return new Image($results[0]['id'], $results[0]['path']);
+    }
 
     public static function fileUpload($rawFile, $path, Database $db) {
         $fileName = time().'_'.basename($rawFile['image_path']['name']);
         $uploadFile = $path.$fileName;
 
         if (move_uploaded_file($rawFile['image_path']['tmp_name'], $uploadFile)) {
-            //echo "File is valid, and was successfully uploaded.\n";
             $image = Image::saveToDb($fileName, $db);
+
             return new self($image['id'], $image['fileName']);
         } else {
-            echo "Possible file upload attack!\n";
+            return false;
         }
     }
+
+//    public static function checkImage($rawFile) {
+//        if(is_uploaded_file($rawFile['image_path']['tmp_name'])) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     public static function saveToDb($fileName, Database $db) {
         $datetime = date('Y-m-d G:i:s');

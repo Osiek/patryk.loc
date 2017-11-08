@@ -7,13 +7,13 @@ require_once 'autoload.php';
  * Time: 23:23
  */
 
-if($_GET !== null) {
+if($_SERVER['REQUEST_METHOD'] === 'GET') {
     if(!is_numeric($_GET['id'])) return;
     $db = new Database();
     $stmt =  $db->dbh->prepare("DELETE FROM car WHERE id = :id");
     $stmt->bindParam(':id', $_GET['id']);
     $stmt->execute();
-} elseif (count($_POST['carstodelete']) > 0) {
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && count($_POST['carstodelete']) > 0) {
     $db = new Database();
     $stmt =  $db->dbh->prepare("DELETE FROM car WHERE id = :id");
     foreach ($_POST['carstodelete'] as $id) {

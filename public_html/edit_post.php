@@ -9,19 +9,17 @@ if(!empty($_POST)) {
     $valid = true;
     foreach ($_POST as $key => $r) {
         if(!$key == "equipmentname") {
-            if (preg_match('/[a-zA-Z0-9\s]+/', trim($r)) == 0) {
+            if (preg_match('/[a-zA-Z0-9\s\,]+/', trim($r)) == 0) {
                 array_push($formErrors, "Element " . $key . " zawiera błąd.");
                 $valid = false;
             }
         }
     }
 
-    if(!(is_numeric($_POST['car_manufactured']) && $_POST['car_manufactured'] < date('Y') && $_POST['car_manufactured'] > 1970)) {
+    if(!(is_numeric($_POST['car_manufactured']) && $_POST['car_manufactured'] < date('Y')+1 && $_POST['car_manufactured'] > 1970)) {
         $valid = false;
         array_push($formErrors, "Element car_manufactured zawiera błąd.");
     }
-
-    $image = Image::fileUpload($_FILES, $_SERVER['DOCUMENT_ROOT'] . "/images/uploaded/", $db);
 
     if($image === false) {
         $valid = false;
@@ -29,24 +27,25 @@ if(!empty($_POST)) {
     }
 
     if($valid) {
+        $car_id = $_POST['car_id'];
         $car_title = $_POST['car_title'];
         $car_manufactured = $_POST['car_manufactured'];
         $make_name = $_POST['make_name'];
         $model_name = $_POST['model_name'];
         $version_name = $_POST['version_name'];
         $color_name = $_POST['color_name'];
+        $image_id = $_POST['image_id'];
 
         $equipment_names = array();
         if(isset($_POST['equipmentname'])) {
             $equipment_names = $_POST['equipmentname'];
         }
 
-        //$image = $_FILES;
-
         $make = Make::withId($make_name, $db);
         $model = Model::withId($model_name, $db);
         $version = Version::withId($version_name, $db);
         $color = Color::withId($color_name, $db);
+        $image = Image::fromId($image_id, $db);
         $equipments = array();
 
         foreach ($equipment_names as $eq) {
@@ -59,15 +58,15 @@ if(!empty($_POST)) {
         } else {
             //$image = Image::fileUpload($image, $_SERVER['DOCUMENT_ROOT'] . "/images/uploaded/", $db);
 
-            $car = new Car(null, $car_title, $make, $model, $version, $car_manufactured, $color, $equipments, $image);
-            $car->save($db);
-            echo '<p>Dodano wpis | Idź do <a href="index.php">strony głównej</a></p>';
+            $car = new Car($car_id, $car_title, $make, $model, $version, $car_manufactured, $color, $equipments, $image);
+            $car->update($db);
+            echo '<p>Zapisano | Idź do <a href="index.php">strony głównej</a></p>';
         }
 
     }
 
     if(count($formErrors) > 0) {
-        echo '<p>Wystąpił błąd | Idź do <a href="index.php">strony głównej</a> lub <a href="add.php">formularza</a></p>';
+        echo '<p>Wystąpił błąd | Idź do <a href="index.php">strony głównej</a> lub edutuj ponownie<a href="edit.php?id='.$_POST['car_id'].'"> formularza</a></p>';
         foreach ($formErrors as $err) {
             echo '<p>' . $err . '</p>';
         }
