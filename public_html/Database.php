@@ -28,20 +28,7 @@ class Database
 
     public function getRowIdFromRecordIfExists($tableName, $column, $value)
     {
-        $table = "";
-        switch ($tableName) {
-            case "color" : $table = "color";
-                break;
-            case "equipment" : $table = "equipment";
-                break;
-            case "make" : $table = "make";
-                break;
-            case "model" : $table = "model";
-                break;
-            case "version" : $table = "version";
-                break;
-        }
-
+        $table = $this->checkAllowedTables($tableName);
 
         $stmt = $this->dbh->prepare('SELECT id, '.$column.' FROM '.$table.' WHERE '.$column.' = :value LIMIT 1');
         $stmt->bindParam(':value', $value, PDO::PARAM_STR);
@@ -58,19 +45,8 @@ class Database
     }
 
     public function getRowNameFromId($tableName, $id) {
-        $table = "";
-        switch ($tableName) {
-            case "color" : $table = "color";
-                break;
-            case "equipment" : $table = "equipment";
-                break;
-            case "make" : $table = "make";
-                break;
-            case "model" : $table = "model";
-                break;
-            case "version" : $table = "version";
-                break;
-        }
+
+        $table = $this->checkAllowedTables($tableName);
 
         $queryString = 'SELECT id, name 
                         FROM '.$table.' 
@@ -87,5 +63,23 @@ class Database
             return false;
         }
     }
+
+    private function checkAllowedTables($table) {
+        $tableName = "";
+        switch ($table) {
+            case "color" : $tableName = "color";
+                break;
+            case "equipment" : $tableName = "equipment";
+                break;
+            case "make" : $tableName = "make";
+                break;
+            case "model" : $tableName = "model";
+                break;
+            case "version" : $tableName = "version";
+                break;
+        }
+
+        return $tableName;
+}
 
 }

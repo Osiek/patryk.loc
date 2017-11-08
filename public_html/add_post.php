@@ -21,6 +21,7 @@ if(!empty($_POST)) {
     if(!(is_numeric($_POST['car_manufactured']) && $_POST['car_manufactured'] < date('Y')+1 && $_POST['car_manufactured'] > 1970)) {
         $valid = false;
         array_push($formErrors, 'Pole ' . Content::getTitleFromName('car_manufactured') . ' zawiera błąd.');
+
     }
 
     $image = Image::fileUpload($_FILES, $_SERVER['DOCUMENT_ROOT'] . "/images/uploaded/", $db);
