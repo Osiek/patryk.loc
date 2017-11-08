@@ -36,4 +36,11 @@ $(function(ready){
         }
     });
 
+    $("#deleteForm").submit(function() {
+        if ($("input[type='submit']").val() == "Usuń") {
+            var c = confirm("Czy jesteś pewien, że chcesz usunąć wybrane wpisy?");
+            return c;
+        }
+    });
+
 });

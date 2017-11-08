@@ -14,11 +14,12 @@ $myCars = $content->getAllCars();
 <div class="container">
     <h1>Samochody</h1>
     <?php
+    if(count($myCars) == 0) echo '<h2>Brak samochodów do wyświetlnia</h2>';
     foreach ($myCars as $c) {
         ?>
         <div class="row">
             <h2><?php echo $c->title; ?></h2>
-            <div class="col-lg-4"><img src="images/uploaded/<?php echo $c->image->getFileName(); ?>" width="280px" height="160px"/></div>
+            <div class="col-lg-4"><img src="images/uploaded/<?php echo $c->image->getFileName(); ?>" class="img-thumbnail"/></div>
             <div class="col-lg-8">
                 <h2></h2>
                 <table class="table">
@@ -57,8 +58,10 @@ $myCars = $content->getAllCars();
                     <tr>
                         <td>Wyposażenie</td>
                         <td>
-                            <?php foreach ($c->equipment as $acc) {echo $acc->getName().' '; }
-                            ?>
+                            <ul class="list-group">
+                                <?php foreach ($c->equipment as $acc) {echo '<li class="list-group-item">'.$acc->getName().'</li>'; }
+                                ?>
+                            </ul>
                         </td>
                     </tr>
                     </tbody>

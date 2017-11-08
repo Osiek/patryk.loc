@@ -25,7 +25,7 @@ class Version extends BaseModel
 
         $stmt->bindParam(":color_name", $name);
         $result = $stmt->execute();
-        
+
         return $db->dbh->lastInsertId();
     }
 

@@ -99,4 +99,31 @@ class Content
 
         return $cars;
     }
+
+    public static function getTitleFromName($inputName) {
+        $title = "";
+
+        switch ($inputName) {
+            case "car_title":
+                $title = "nazwa samochodu";
+                break;
+            case "make_name":
+                $title = "marka";
+                break;
+            case "model_name":
+                $title = "model";
+                break;
+            case "version_name":
+                $title = "wersja";
+                break;
+            case "car_manufactured":
+                $title = "rok produkcji";
+                break;
+            case "color_name":
+                $title = "kolor";
+                break;
+        }
+
+        return $title;
+    }
 }

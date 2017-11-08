@@ -10,15 +10,17 @@ if(!empty($_POST)) {
     foreach ($_POST as $key => $r) {
         if(!$key == "equipmentname") {
             if (preg_match('/[a-zA-Z0-9\s]+/', trim($r)) == 0) {
-                array_push($formErrors, "Element " . $key . " zawiera błąd.");
+
+
+                array_push($formErrors, 'Pole ' . Content::getTitleFromName($key) . ' zawiera błąd.');
                 $valid = false;
             }
         }
     }
 
-    if(!(is_numeric($_POST['car_manufactured']) && $_POST['car_manufactured'] < date('Y') && $_POST['car_manufactured'] > 1970)) {
+    if(!(is_numeric($_POST['car_manufactured']) && $_POST['car_manufactured'] < date('Y')+1 && $_POST['car_manufactured'] > 1970)) {
         $valid = false;
-        array_push($formErrors, "Element car_manufactured zawiera błąd.");
+        array_push($formErrors, 'Pole ' . Content::getTitleFromName('car_manufactured') . ' zawiera błąd.');
     }
 
     $image = Image::fileUpload($_FILES, $_SERVER['DOCUMENT_ROOT'] . "/images/uploaded/", $db);

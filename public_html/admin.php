@@ -19,7 +19,7 @@ $cars = $content->getAllCars();
 
 <div class="container">
     <h1>Zarządzanie zawartością</h1>
-    <form enctype="multipart/form-data" action="delete.php" method="post">
+    <form enctype="multipart/form-data" action="delete.php" method="post" id="deleteForm">
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -36,7 +36,7 @@ $cars = $content->getAllCars();
                 <tr>
                     <td><?php echo $c->title; ?></td>
                     <td><?php echo $c->id ?></td>
-                    <td><a href="edit.php?id=<?php echo $c->id ?>">Edytuj</a> <a href="delete.php?id=<?php echo $c->id ?>">Usuń</a></td>
+                    <td><a href="edit.php?id=<?php echo $c->id ?>">Edytuj</a> | <a href="delete.php?id=<?php echo $c->id ?>">Usuń</a></td>
                     <td><input type="checkbox" name="carstodelete[]" value="<?php echo $c->id ?>"/></td>
                 </tr>
             <?php

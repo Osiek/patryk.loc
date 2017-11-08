@@ -90,7 +90,7 @@ class Car
         $stmt = $db->dbh->prepare($query);
 
         foreach ($this->equipment as $eq) {
-            $stmt->bindValue(':carid', $addedCarId);
+            $stmt->bindValue(':carid', $this->id);
             $stmt->bindValue(':equipmentid', $eq->getId());
             $stmt->execute();
         }

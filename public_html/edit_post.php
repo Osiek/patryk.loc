@@ -10,7 +10,7 @@ if(!empty($_POST)) {
     foreach ($_POST as $key => $r) {
         if(!$key == "equipmentname") {
             if (preg_match('/[a-zA-Z0-9\s\,]+/', trim($r)) == 0) {
-                array_push($formErrors, "Element " . $key . " zawiera błąd.");
+                array_push($formErrors, 'Pole ' . Content::getTitleFromName($key) . ' zawiera błąd.');
                 $valid = false;
             }
         }
@@ -18,7 +18,7 @@ if(!empty($_POST)) {
 
     if(!(is_numeric($_POST['car_manufactured']) && $_POST['car_manufactured'] < date('Y')+1 && $_POST['car_manufactured'] > 1970)) {
         $valid = false;
-        array_push($formErrors, "Element car_manufactured zawiera błąd.");
+        array_push($formErrors, 'Pole ' . Content::getTitleFromName('car_manufactured') . ' zawiera błąd.');
     }
 
     if($image === false) {
@@ -61,6 +61,16 @@ if(!empty($_POST)) {
             $car = new Car($car_id, $car_title, $make, $model, $version, $car_manufactured, $color, $equipments, $image);
             $car->update($db);
             echo '<p>Zapisano | Idź do <a href="index.php">strony głównej</a></p>';
+
+//            echo '<pre>';
+//            echo $car_id;
+//            print_r($make);
+//            print_r($model);
+//            print_r($version);
+//            print_r($color);
+//            print_r($image);
+//            print_r($equipments);
+//            echo '</pre>';
         }
 
     }
